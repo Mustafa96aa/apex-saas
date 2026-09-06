@@ -1,3 +1,187 @@
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 html, body { height: 100%; }
 #__next { height: 100%; }
+
+/* ─── SIDEBAR ─── */
+.sidebar {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 265px;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar.closed {
+  transform: translateX(270px);
+}
+
+/* ─── OVERLAY ─── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 69;
+  background: rgba(2, 5, 9, 0.8);
+  backdrop-filter: blur(5px);
+}
+
+/* ─── HAMBURGER ─── */
+.hbg {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  transition: background 0.15s;
+}
+.hbg:hover { background: #0a1220; }
+.hbg span {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: #7a9ab5;
+  transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hbg.open span { background: #00d4ff; }
+.hbg.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hbg.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hbg.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ─── TABS ─── */
+.tab {
+  border: none;
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+  transition: all 0.18s;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px;
+  flex: 1;
+  border-top: 2px solid transparent;
+}
+.tab.on { border-top-color: #00d4ff; }
+
+/* ─── BUTTONS ─── */
+.bp {
+  background: linear-gradient(135deg, #00d4ff, #0066ff) !important;
+  color: #000 !important;
+  border: none !important;
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+  font-weight: 800;
+  transition: all 0.18s;
+}
+.bp:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
+}
+.bp:disabled { opacity: 0.35; }
+
+.ghost {
+  background: transparent;
+  border: 1px solid #112235;
+  color: #7a9ab5;
+  cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+  transition: all 0.14s;
+  border-radius: 10px;
+}
+.ghost:hover {
+  background: #0a1220;
+  border-color: #1a3048;
+  color: #dce8f5;
+}
+
+/* ─── INPUTS ─── */
+.inp {
+  background: #060c17;
+  border: 1px solid #112235;
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: #dce8f5;
+  font-size: 14px;
+  direction: rtl;
+  width: 100%;
+  font-family: 'Cairo', sans-serif;
+  transition: border 0.16s;
+}
+input:focus {
+  outline: none !important;
+  border-color: rgba(0, 212, 255, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.07) !important;
+}
+select {
+  background: #060c17;
+  border: 1px solid #112235;
+  color: #dce8f5;
+  direction: rtl;
+  font-family: 'Cairo', sans-serif;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fi {
+  from { opacity: 0; transform: translateY(9px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fi2 {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fi { animation: fi 0.22s ease forwards; }
+.fi2 { animation: fi2 0.2s ease forwards; }
+.spin { animation: spin 0.85s linear infinite; display: inline-block; }
+
+/* ─── ROLE CARDS ─── */
+.role-card {
+  border: 2px solid #112235;
+  border-radius: 14px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+  text-align: center;
+  background: #060c17;
+}
+.role-card:hover { border-color: rgba(0, 212, 255, 0.35); }
+.role-card.sel {
+  border-color: #00d4ff;
+  background: rgba(0, 212, 255, 0.07);
+}
+
+/* ─── LIGHT MODE ─── */
+.light .sidebar { background: rgba(238, 244, 251, 0.98); }
+.light .overlay { background: rgba(15, 39, 68, 0.6); }
+.light .ghost { background: transparent; border-color: #d0e2f5; color: #3a6491; }
+.light .ghost:hover { background: #f5f9ff; }
+.light .inp { background: #fff; border-color: #d0e2f5; color: #0f2744; }
+.light select { background: #fff; border-color: #d0e2f5; color: #0f2744; }
