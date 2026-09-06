@@ -2,10 +2,5 @@
   "framework": "nextjs",
   "buildCommand": "next build",
   "devCommand": "next dev",
-  "installCommand": "npm install",
-  "regions": ["fra1"],
-  "env": {
-    "ANTHROPIC_API_KEY": "@anthropic-api-key",
-    "SUPABASE_SERVICE_ROLE_KEY": "@supabase-service-role-key"
-  }
+  "installCommand": "npm install"
 }
