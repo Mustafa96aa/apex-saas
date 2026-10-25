@@ -1,12 +1,12 @@
 /**
- * /api/payment/list — جلب طلبات الدفع للمدير
+ * /api/payment/list — جلب طلبات الدفع للأدمن
  */
 import { createServerClient } from '../../../lib/supabase';
+import { isAdminRequest } from '../../../lib/admin';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') return res.status(405).end();
-  const adminKey = req.headers['x-admin-key'];
-  if (adminKey !== process.env.ADMIN_SECRET_KEY) return res.status(403).json({ error: 'غير مصرح' });
+  if (!isAdminRequest(req)) return res.status(403).json({ error: 'غير مصرح' });
 
   const sb = createServerClient();
   const { data, error } = await sb
